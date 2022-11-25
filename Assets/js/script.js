@@ -6,31 +6,27 @@ $(function () {
   var currentTime = dayjs();
   var blockNumber = $(".time-block").map(function () { return (this.id) }).toArray();
 
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  $(".btn").click(function () {
-    // Variables for the user input description along with the block number.
-    var blockHour = $(this).parent().attr("id");
-    var desc = $(this).siblings(".description").val();
-    var blockHourDisplay = $(this).siblings(".hour").text();
+  // Event listener for the user clicking on the save button
+  $(".btn").click(saveEvent);
 
-    // Save information to local storage
-    localStorage.setItem(blockHour, desc)
+  function saveEvent() {
+        // Variables for the user input description along with the block number.
+        var blockHour = $(this).parent().attr("id");
+        var desc = $(this).siblings(".description").val();
+        var blockHourDisplay = $(this).siblings(".hour").text();
+    
+        // Save information to local storage
+        localStorage.setItem(blockHour, desc);
+    
+        // Send alert to the user upon save informing them of a successful save including
+        // what input they saved along with the hour they saved to.
+        alert("Saved event to " + blockHourDisplay + "!\n" + desc);
+  }
 
-    // Send alert to the user upon save informing them of a successful save including
-    // what input they saved along with the hour they saved to.
-    alert("Saved event to " + blockHourDisplay + "!\n" + desc);
-    });
-
-
-  // Run the checkTime function when the page is initially loaded.
+  // Run the checkTime function when the page is initially loaded then runs again every second.
   checkTime();
-  // Run the checkTime function every second to ensure near real-time updates
   setInterval(checkTime, 1000);
+
   // Checks the current time to update the color coding of the time blocks.
   function checkTime() {
     for (var i = 0; i < blockNumber.length; i++) {
@@ -48,11 +44,19 @@ $(function () {
         blockNumberEl.classList.add("future");
       }
     }
-  }
+  };
 
+  loadEvent();
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
+  function loadEvent() {
+    var test = [];
+    for (var i = 0; i < blockNumber.length; i++) {
+      test.push(localStorage.getItem(blockNumber[i]));
+      console.log(test);
+    }
+  }
 
 
   // Load the date/time when the page is initially loaded.
