@@ -18,22 +18,25 @@ $(function () {
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
-  setInterval(checkTime, 10000);
 
+  // Run the checkTime function every second to ensure near real-time updates
+  setInterval(checkTime, 1000);
+
+  // Checks the current time to update the color coding of the time blocks.
   function checkTime() {
-    console.log("checkTime");
     for (var i = 0; i < blockNumber.length; i++) {
-      var pastHour = document.getElementById(blockNumber);
+      var blockNumberEl = document.getElementById(blockNumber[i]);
       var currentHour = dayjs().get("hour");
+      // Clear colors in order to update them without conflict
+      blockNumberEl.classList.remove("past", "present", "future");
 
+      // Update the colors based on whether the time block is referencing past, present, or future hours.
       if (blockNumber[i] < currentHour) {
-        console.log(blockNumber[i], "PAST");
-
+        blockNumberEl.classList.add("past");
       } else if (blockNumber[i] == currentHour) {
-        console.log(blockNumber[i], "CURRENT");
-
+        blockNumberEl.classList.add("present");
       } else {
-        console.log(blockNumber[i], "FUTURE");
+        blockNumberEl.classList.add("future");
       }
     }
   }
