@@ -46,17 +46,21 @@ $(function () {
     }
   };
 
+  // Set the descriptions to the saved events when the page intially loads.
   loadEvent();
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
+
   function loadEvent() {
-    var test = [];
+    var eventList = [];
+    // Push all saved events into an array
     for (var i = 0; i < blockNumber.length; i++) {
-      test.push(localStorage.getItem(blockNumber[i]));
-      console.log(test);
+      eventList.push(localStorage.getItem(blockNumber[i]));
     }
-  }
+    // Align the event array with their specific time-block and display them on the page
+    $(".description").each(function() {
+      var taskNumber = ($(this).closest(".time-block").attr("id"))-9;
+      $(this).text(eventList[taskNumber]);
+    })
+  };
 
 
   // Load the date/time when the page is initially loaded.
