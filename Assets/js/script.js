@@ -2,9 +2,9 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
+  // Global variables
   var currentTime = dayjs();
   var blockNumber = $(".time-block").map(function () { return (this.id) }).toArray();
-  console.log(blockNumber);
 
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
@@ -13,14 +13,18 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   $(".btn").click(function () {
-    var desc = $(this).siblings(".description").val();
+    // Variables for the user input description along with the block number.
     var blockHour = $(this).parent().attr("id");
-    
-    console.log(blockHour, desc);
+    var desc = $(this).siblings(".description").val();
+    var blockHourDisplay = $(this).siblings(".hour").text();
 
+    // Save information to local storage
+    localStorage.setItem(blockHour, desc)
 
-    alert("Test");
-  });
+    // Send alert to the user upon save informing them of a successful save including
+    // what input they saved along with the hour they saved to.
+    alert("Saved event to " + blockHourDisplay + "!\n" + desc);
+    });
 
 
   // Run the checkTime function when the page is initially loaded.
