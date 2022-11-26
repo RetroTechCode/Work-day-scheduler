@@ -6,21 +6,23 @@ $(function () {
   var currentTime = dayjs();
   var blockNumber = $(".time-block").map(function () { return (this.id) }).toArray();
 
-  // Event listener for the user clicking on the save button
-  $(".btn").click(saveEvent);
+  // Global event listeners
+  $(".saveBtn").click(saveEvent);
+  $(".clearBtn").click(clearConfirm);
 
+  // Save user input events to local storage
   function saveEvent() {
-        // Variables for the user input description along with the block number.
-        var blockHour = $(this).parent().attr("id");
-        var desc = $(this).siblings(".description").val();
-        var blockHourDisplay = $(this).siblings(".hour").text();
-    
-        // Save information to local storage
-        localStorage.setItem(blockHour, desc);
-    
-        // Send alert to the user upon save informing them of a successful save including
-        // what input they saved along with the hour they saved to.
-        alert("Saved event to " + blockHourDisplay + "!\n" + desc);
+    // Variables for the user input description along with the block number.
+    var blockHour = $(this).parent().attr("id");
+    var desc = $(this).siblings(".description").val();
+    var blockHourDisplay = $(this).siblings(".hour").text();
+
+    // Save information to local storage
+    localStorage.setItem(blockHour, desc);
+
+    // Send alert to the user upon save informing them of a successful save including
+    // what input they saved along with the hour they saved to.
+    alert("Saved event to " + blockHourDisplay + "!\n" + desc);
   }
 
   // Run the checkTime function when the page is initially loaded then runs again every second.
@@ -48,7 +50,7 @@ $(function () {
 
   // Set the descriptions to the saved events when the page intially loads.
   loadEvent();
-
+  // Load events from local storage and display them on the page
   function loadEvent() {
     var eventList = [];
     // Push all saved events into an array
@@ -56,12 +58,21 @@ $(function () {
       eventList.push(localStorage.getItem(blockNumber[i]));
     }
     // Align the event array with their specific time-block and display them on the page
-    $(".description").each(function() {
-      var taskNumber = ($(this).closest(".time-block").attr("id"))-9;
+    $(".description").each(function () {
+      var taskNumber = ($(this).closest(".time-block").attr("id")) - 9;
       $(this).text(eventList[taskNumber]);
     })
   };
 
+function clearConfirm() {
+  var confirm = window.confirm("Are you sure you would like to clear all events?\nPress OK to confirm or Cancel to decline.");
+  if (confirm) {
+    localStorage.clear();
+    window.location.reload();
+  } else {
+    return;
+  }
+};
 
   // Load the date/time when the page is initially loaded.
   date();

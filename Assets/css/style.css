@@ -12,6 +12,12 @@ textarea {
   padding: 10px;
 }
 
+.customHeader {
+  text-align: center;
+  background-color: lightblue;
+  border-bottom: 5px gray solid;
+}
+
 .description {
   white-space: pre-wrap;
 }
@@ -56,4 +62,15 @@ textarea {
 .saveBtn i:hover {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
+}
+
+.clearBtn {
+  font-weight: bold;
+}
+
+.clearBtn:hover {
+  font-style: italic;
+  text-decoration: underline;
+  color: red;
+  cursor: pointer;
 }
