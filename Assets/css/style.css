@@ -66,6 +66,9 @@ textarea {
 
 .clearBtn {
   font-weight: bold;
+  width: 130px;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .clearBtn:hover {

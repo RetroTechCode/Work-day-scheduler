@@ -64,8 +64,10 @@ $(function () {
     })
   };
 
+// Function to clear the localStorage based on user input from a popup confirmation.
 function clearConfirm() {
   var confirm = window.confirm("Are you sure you would like to clear all events?\nPress OK to confirm or Cancel to decline.");
+  
   if (confirm) {
     localStorage.clear();
     window.location.reload();
